@@ -39,7 +39,7 @@ struct ContentView: View {
     {
         guard let url = URL(string: "https://itunes.apple.com/search?term=taylor+swift&entity=song") else
         {
-            print("Invalid URL.")
+            print("Invalid URL!")
             return
         }
     }
