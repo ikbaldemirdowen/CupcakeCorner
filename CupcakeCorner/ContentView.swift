@@ -7,15 +7,41 @@
 
 import SwiftUI
 
+struct Response : Codable
+{
+    var results = [Result]()
+}
+
+struct Result : Codable
+{
+    var trackID : Int
+    var trackName : String
+    var collectionName : String
+}
+
 struct ContentView: View {
+    @State private var results = [Result]()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        List(results, id: \.trackID)
+        {
+            result in
+            Text(result.trackName)
+                .font(.headline)
+            Text(result.collectionName)
+                .font(.title3)
         }
-        .padding()
+        .task {
+            await loadData()
+        }
+    }
+    
+    func loadData() async
+    {
+        guard let url = URL(string: "https://itunes.apple.com/search?term=taylor+swift&entity=song") else
+        {
+            print("Invalid URL.")
+            return
+        }
     }
 }
 
